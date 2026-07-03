@@ -1,0 +1,364 @@
+'use client'
+
+import { useCallback, useEffect, useRef, useState } from 'react'
+import {
+  AlertTriangle,
+  Camera,
+  Keyboard,
+  Loader2,
+  ScanLine,
+  Zap,
+  ZapOff,
+} from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { ResultCard } from '@/components/result-card'
+import { SessionStats, type SessionCounts } from '@/components/session-stats'
+import { useQrScanner, type ScannerError } from '@/hooks/use-qr-scanner'
+import { redeemCode } from '@/lib/redeem-client'
+import { extractCode, type RedemptionResult } from '@/lib/redemption'
+import { cn } from '@/lib/utils'
+
+type Phase = 'idle' | 'scanning' | 'validating' | 'result'
+
+const ERROR_COPY: Record<ScannerError, { title: string; detail: string }> = {
+  'no-camera': {
+    title: 'No Camera Found',
+    detail: 'This device has no usable camera. Use manual entry instead.',
+  },
+  'permission-denied': {
+    title: 'Camera Access Needed',
+    detail:
+      'Allow camera access in your browser settings, then tap Start Scanning.',
+  },
+  'insecure-context': {
+    title: 'Secure Connection Required',
+    detail: 'Camera access requires HTTPS. Open this app over a secure link.',
+  },
+  unknown: {
+    title: 'Camera Error',
+    detail: 'The camera could not be started. Try again or use manual entry.',
+  },
+}
+
+export function ScannerScreen() {
+  const [phase, setPhase] = useState<Phase>('idle')
+  const [result, setResult] = useState<RedemptionResult | null>(null)
+  const [counts, setCounts] = useState<SessionCounts>({
+    success: 0,
+    failed: 0,
+  })
+  const [manualOpen, setManualOpen] = useState(false)
+  const [manualCode, setManualCode] = useState('')
+
+  // Guards against processing multiple frames of the same code.
+  const processingRef = useRef(false)
+
+  const validate = useCallback(async (rawValue: string) => {
+    const code = extractCode(rawValue)
+    if (!code) {
+      processingRef.current = false
+      return
+    }
+
+    setPhase('validating')
+    const res = await redeemCode(code)
+    setResult(res)
+    setCounts((prev) => ({
+      success: prev.success + (res.outcome === 'success' ? 1 : 0),
+      failed:
+        prev.failed +
+        (res.outcome !== 'success' && res.outcome !== 'error' ? 1 : 0),
+    }))
+    setPhase('result')
+  }, [])
+
+  const handleDetect = useCallback(
+    (value: string) => {
+      if (processingRef.current) return
+      processingRef.current = true
+      stop()
+      void validate(value)
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [validate]
+  )
+
+  const { videoRef, start, stop, isRunning, error, hasFlash, flashOn, toggleFlash } =
+    useQrScanner({ onDetect: handleDetect })
+
+  const beginScanning = useCallback(async () => {
+    processingRef.current = false
+    setResult(null)
+    setPhase('scanning')
+    await start()
+  }, [start])
+
+  // If starting failed (permission/camera error), drop back to idle so the
+  // error message and retry button are shown.
+  useEffect(() => {
+    if (phase === 'scanning' && error) {
+      setPhase('idle')
+    }
+  }, [phase, error])
+
+  const handleScanNext = useCallback(() => {
+    void beginScanning()
+  }, [beginScanning])
+
+  const handleManualSubmit = useCallback(
+    (e: React.FormEvent) => {
+      e.preventDefault()
+      const value = manualCode.trim()
+      if (!value) return
+      setManualOpen(false)
+      setManualCode('')
+      processingRef.current = true
+      void validate(value)
+    },
+    [manualCode, validate]
+  )
+
+  return (
+    <main className="relative mx-auto flex h-[100dvh] w-full max-w-md flex-col overflow-hidden bg-background">
+      {/* Header */}
+      <header className="z-20 flex items-center justify-between gap-3 border-b border-border bg-primary px-4 py-3 text-primary-foreground">
+        <div className="flex items-center gap-2">
+          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent">
+            <ScanLine className="h-5 w-5 text-accent-foreground" aria-hidden="true" />
+          </div>
+          <div className="leading-tight">
+            <p className="text-sm font-bold">Swag Redemption</p>
+            <p className="text-xs opacity-80">Event Scanner</p>
+          </div>
+        </div>
+        <SessionStats counts={counts} />
+      </header>
+
+      {/* Camera stage */}
+      <div className="relative flex-1 overflow-hidden bg-black">
+        {/* Video is always mounted so the ref persists across phases. */}
+        <video
+          ref={videoRef}
+          playsInline
+          muted
+          className={cn(
+            'absolute inset-0 h-full w-full object-cover',
+            phase === 'scanning' || phase === 'validating'
+              ? 'opacity-100'
+              : 'opacity-0'
+          )}
+        />
+
+        {/* Idle */}
+        {phase === 'idle' ? (
+          <div className="absolute inset-0 flex flex-col items-center justify-center gap-6 bg-background px-6 text-center">
+            {error ? (
+              <IdleError
+                title={ERROR_COPY[error].title}
+                detail={ERROR_COPY[error].detail}
+              />
+            ) : (
+              <>
+                <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-primary">
+                  <Camera className="h-10 w-10 text-primary-foreground" aria-hidden="true" />
+                </div>
+                <div className="space-y-2">
+                  <h1 className="text-2xl font-bold tracking-tight text-balance">
+                    Ready to Scan
+                  </h1>
+                  <p className="mx-auto max-w-xs text-sm leading-relaxed text-muted-foreground text-pretty">
+                    Point the camera at an attendee&apos;s QR code to validate and
+                    redeem their swag.
+                  </p>
+                </div>
+              </>
+            )}
+
+            <div className="w-full max-w-xs space-y-3">
+              <Button
+                onClick={beginScanning}
+                size="lg"
+                className="h-14 w-full text-lg font-semibold"
+              >
+                <ScanLine className="mr-2 h-5 w-5" aria-hidden="true" />
+                Start Scanning
+              </Button>
+              <Button
+                onClick={() => setManualOpen(true)}
+                variant="outline"
+                size="lg"
+                className="h-12 w-full"
+              >
+                <Keyboard className="mr-2 h-5 w-5" aria-hidden="true" />
+                Enter Code Manually
+              </Button>
+            </div>
+          </div>
+        ) : null}
+
+        {/* Scanning overlay */}
+        {phase === 'scanning' ? (
+          <>
+            <ScanReticle />
+            <div className="absolute inset-x-0 top-4 z-10 flex justify-center px-4">
+              <p className="rounded-full bg-black/60 px-4 py-1.5 text-sm font-medium text-white">
+                Align the QR code within the frame
+              </p>
+            </div>
+            <div className="absolute inset-x-0 bottom-6 z-10 flex items-center justify-center gap-3 px-4">
+              {hasFlash ? (
+                <Button
+                  onClick={toggleFlash}
+                  variant="secondary"
+                  size="lg"
+                  className="h-12 gap-2 rounded-full bg-white/90 text-foreground hover:bg-white"
+                >
+                  {flashOn ? (
+                    <ZapOff className="h-5 w-5" aria-hidden="true" />
+                  ) : (
+                    <Zap className="h-5 w-5" aria-hidden="true" />
+                  )}
+                  {flashOn ? 'Flash Off' : 'Flash On'}
+                </Button>
+              ) : null}
+              <Button
+                onClick={() => setManualOpen(true)}
+                variant="secondary"
+                size="lg"
+                className="h-12 gap-2 rounded-full bg-white/90 text-foreground hover:bg-white"
+              >
+                <Keyboard className="h-5 w-5" aria-hidden="true" />
+                Manual
+              </Button>
+            </div>
+          </>
+        ) : null}
+
+        {/* Validating overlay */}
+        {phase === 'validating' ? (
+          <div className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-4 bg-black/60 text-white">
+            <Loader2 className="h-12 w-12 animate-spin" aria-hidden="true" />
+            <p className="text-lg font-semibold">Validating code&hellip;</p>
+          </div>
+        ) : null}
+
+        {/* Result overlay */}
+        {phase === 'result' && result ? (
+          <div className="absolute inset-0 z-10">
+            <ResultCard
+              result={result}
+              onScanNext={handleScanNext}
+              onRetry={() => {
+                if (result.code) {
+                  processingRef.current = true
+                  void validate(result.code)
+                } else {
+                  handleScanNext()
+                }
+              }}
+            />
+          </div>
+        ) : null}
+
+        {/* Manual entry sheet */}
+        {manualOpen ? (
+          <ManualEntry
+            value={manualCode}
+            onChange={setManualCode}
+            onSubmit={handleManualSubmit}
+            onClose={() => setManualOpen(false)}
+          />
+        ) : null}
+      </div>
+    </main>
+  )
+}
+
+function IdleError({ title, detail }: { title: string; detail: string }) {
+  return (
+    <>
+      <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-destructive/10">
+        <AlertTriangle className="h-10 w-10 text-destructive" aria-hidden="true" />
+      </div>
+      <div className="space-y-2">
+        <h1 className="text-2xl font-bold tracking-tight text-balance">{title}</h1>
+        <p className="mx-auto max-w-xs text-sm leading-relaxed text-muted-foreground text-pretty">
+          {detail}
+        </p>
+      </div>
+    </>
+  )
+}
+
+function ScanReticle() {
+  return (
+    <div className="pointer-events-none absolute inset-0 z-[5] flex items-center justify-center">
+      {/* Dim mask around the frame */}
+      <div className="absolute inset-0 bg-black/40" />
+      <div className="relative h-64 w-64">
+        {/* Punch-out clear window */}
+        <div className="absolute inset-0 rounded-2xl bg-transparent shadow-[0_0_0_9999px_rgba(0,0,0,0.4)]" />
+        {/* Corner brackets */}
+        <span className="absolute left-0 top-0 h-10 w-10 rounded-tl-2xl border-l-4 border-t-4 border-accent" />
+        <span className="absolute right-0 top-0 h-10 w-10 rounded-tr-2xl border-r-4 border-t-4 border-accent" />
+        <span className="absolute bottom-0 left-0 h-10 w-10 rounded-bl-2xl border-b-4 border-l-4 border-accent" />
+        <span className="absolute bottom-0 right-0 h-10 w-10 rounded-br-2xl border-b-4 border-r-4 border-accent" />
+        {/* Scan line */}
+        <div className="absolute inset-x-3 top-0 h-[3px] animate-scan-line rounded-full bg-accent shadow-[0_0_12px_2px] shadow-accent" />
+      </div>
+    </div>
+  )
+}
+
+function ManualEntry({
+  value,
+  onChange,
+  onSubmit,
+  onClose,
+}: {
+  value: string
+  onChange: (v: string) => void
+  onSubmit: (e: React.FormEvent) => void
+  onClose: () => void
+}) {
+  return (
+    <div className="absolute inset-0 z-30 flex items-end bg-black/50">
+      <form
+        onSubmit={onSubmit}
+        className="w-full space-y-4 rounded-t-3xl bg-background p-6 animate-in slide-in-from-bottom duration-200"
+      >
+        <div className="mx-auto h-1.5 w-12 rounded-full bg-muted" />
+        <div>
+          <h2 className="text-lg font-bold">Enter Redemption Code</h2>
+          <p className="text-sm text-muted-foreground">
+            Use this if a QR code will not scan.
+          </p>
+        </div>
+        <input
+          autoFocus
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          placeholder="e.g. SWAG-2026-ABCDE"
+          className="h-14 w-full rounded-xl border border-input bg-card px-4 font-mono text-lg outline-none focus:ring-2 focus:ring-ring"
+          inputMode="text"
+          autoCapitalize="characters"
+          autoComplete="off"
+        />
+        <div className="flex gap-3">
+          <Button
+            type="button"
+            variant="outline"
+            size="lg"
+            className="h-12 flex-1"
+            onClick={onClose}
+          >
+            Cancel
+          </Button>
+          <Button type="submit" size="lg" className="h-12 flex-1" disabled={!value.trim()}>
+            Validate
+          </Button>
+        </div>
+      </form>
+    </div>
+  )
+}
