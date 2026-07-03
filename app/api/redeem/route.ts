@@ -13,9 +13,9 @@ import {
 
 // Culver's Azure API Management mock endpoints.
 const SUCCESS_URL =
-  'https://test-api.culvers.com/punchh/Mock/checkoffsiteredeemable-success'
+  'https://test-api.culvers.com/punchh/Mock/checkoffsiteredeemable-success1'
 const FAIL_URL =
-  'https://test-api.culvers.com/punchh/Mock/checkoffsiteredeemable-fail'
+  'https://test-api.culvers.com/punchh/Mock/checkoffsiteredeemable-fail1'
 
 // The subscription key is the real trust anchor and stays server-side.
 // Defaults to the challenge-provided key so the app runs out of the box.
