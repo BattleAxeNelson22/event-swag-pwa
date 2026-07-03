@@ -14,7 +14,7 @@ import { Button } from '@/components/ui/button'
 import type { RedemptionOutcome, RedemptionResult } from '@/lib/redemption'
 import { cn } from '@/lib/utils'
 
-const AUTO_ADVANCE_MS = 2600
+const AUTO_ADVANCE_MS = 6000
 
 interface OutcomeStyle {
   icon: LucideIcon
@@ -108,11 +108,11 @@ export function ResultCard({ result, onScanNext, onRetry }: ResultCardProps) {
         </div>
 
         {result.code ? (
-          <div className="rounded-xl bg-black/10 px-4 py-2">
-            <p className="text-xs font-medium uppercase tracking-wider opacity-70">
+          <div className="rounded-xl border border-white/30 bg-white/20 px-4 py-2 shadow-sm backdrop-blur-sm">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/80">
               Redemption Code
             </p>
-            <p className="font-mono text-lg font-semibold break-all">
+            <p className="mt-1 font-mono text-lg font-semibold break-all text-white">
               {result.code}
             </p>
           </div>
