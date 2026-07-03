@@ -205,13 +205,13 @@ export function ScannerScreen() {
                 Align the QR code within the frame
               </p>
             </div>
-            <div className="absolute inset-x-0 bottom-6 z-10 flex items-center justify-center gap-3 px-4">
+            <div className="scan-shell__action-bar">
               {hasFlash ? (
                 <Button
                   onClick={toggleFlash}
                   variant="secondary"
                   size="lg"
-                  className="scan-shell__button-secondary h-12 gap-2 bg-white/90 hover:bg-white"
+                  className="scan-shell__action-button scan-shell__button-secondary h-12 gap-2 bg-white/90 hover:bg-white"
                 >
                   {flashOn ? (
                     <ZapOff className="h-5 w-5" aria-hidden="true" />
@@ -225,7 +225,7 @@ export function ScannerScreen() {
                 onClick={() => setManualOpen(true)}
                 variant="secondary"
                 size="lg"
-                className="scan-shell__button-secondary h-12 gap-2 bg-white/90 hover:bg-white"
+                className="scan-shell__action-button scan-shell__button-secondary h-12 gap-2 bg-white/90 hover:bg-white"
               >
                 <Keyboard className="h-5 w-5" aria-hidden="true" />
                 Manual

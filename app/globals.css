@@ -310,6 +310,26 @@ body {
   font-family: 'SFMono-Regular', Consolas, monospace;
 }
 
+.scan-shell__action-bar {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  z-index: 10;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  width: 100%;
+  max-width: 100%;
+  padding: 0 1rem calc(1rem + env(safe-area-inset-bottom));
+}
+
+.scan-shell__action-button {
+  flex: 1 1 10rem;
+  max-width: 12rem;
+  min-width: 0;
+}
+
 .scan-shell__reticle {
   position: absolute;
   inset: 0;
