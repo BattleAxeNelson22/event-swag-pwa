@@ -30,23 +30,23 @@ const STYLES: Record<RedemptionOutcome, OutcomeStyle> = {
   },
   already_redeemed: {
     icon: XCircle,
-    panel: 'bg-destructive text-white',
-    iconWrap: 'bg-white/15',
+    panel: 'bg-[#fef2f2] text-[#991b1b]',
+    iconWrap: 'bg-[#991b1b]/12',
   },
   invalid: {
     icon: AlertTriangle,
-    panel: 'bg-destructive text-white',
-    iconWrap: 'bg-white/15',
+    panel: 'bg-[#fef2f2] text-[#991b1b]',
+    iconWrap: 'bg-[#991b1b]/12',
   },
   expired: {
     icon: Clock,
-    panel: 'bg-destructive text-white',
-    iconWrap: 'bg-white/15',
+    panel: 'bg-[#fef2f2] text-[#991b1b]',
+    iconWrap: 'bg-[#991b1b]/12',
   },
   error: {
     icon: WifiOff,
-    panel: 'bg-foreground text-background',
-    iconWrap: 'bg-background/15',
+    panel: 'bg-[#fef2f2] text-[#991b1b]',
+    iconWrap: 'bg-[#991b1b]/12',
   },
 }
 
@@ -61,6 +61,7 @@ export function ResultCard({ result, onScanNext, onRetry }: ResultCardProps) {
   const Icon = style.icon
   const isSuccess = result.outcome === 'success'
   const isError = result.outcome === 'error'
+  const isFailure = !isSuccess
   const [remaining, setRemaining] = useState(AUTO_ADVANCE_MS)
 
   // Auto-advance after a valid scan so the line keeps moving. Failures stay up
@@ -99,20 +100,47 @@ export function ResultCard({ result, onScanNext, onRetry }: ResultCardProps) {
         </div>
 
         <div className="space-y-2">
-          <h1 className="text-3xl font-bold tracking-tight text-balance text-[#14532d]">
+          <h1
+            className={cn(
+              'text-3xl font-bold tracking-tight text-balance',
+              isFailure ? 'text-[#991b1b]' : 'text-[#14532d]'
+            )}
+          >
             {result.title}
           </h1>
-          <p className="mx-auto max-w-xs text-base leading-relaxed text-[#166534] text-pretty">
+          <p
+            className={cn(
+              'mx-auto max-w-xs text-base leading-relaxed text-pretty',
+              isFailure ? 'text-[#b91c1c]' : 'text-[#166534]'
+            )}
+          >
             {result.detail}
           </p>
         </div>
 
         {result.code ? (
-          <div className="rounded-xl border border-[#166534]/20 bg-[#14532d]/10 px-4 py-2 shadow-sm">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#166534]/80">
+          <div
+            className={cn(
+              'rounded-xl border px-4 py-2 shadow-sm',
+              isFailure
+                ? 'border-[#b91c1c]/20 bg-[#fff5f5]'
+                : 'border-[#166534]/20 bg-[#14532d]/10'
+            )}
+          >
+            <p
+              className={cn(
+                'text-xs font-semibold uppercase tracking-[0.2em]',
+                isFailure ? 'text-[#b91c1c]/80' : 'text-[#166534]/80'
+              )}
+            >
               Redemption Code
             </p>
-            <p className="mt-1 font-mono text-lg font-semibold break-all text-[#14532d]">
+            <p
+              className={cn(
+                'mt-1 font-mono text-lg font-semibold break-all',
+                isFailure ? 'text-[#991b1b]' : 'text-[#14532d]'
+              )}
+            >
               {result.code}
             </p>
           </div>
