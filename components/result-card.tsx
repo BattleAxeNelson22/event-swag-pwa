@@ -84,14 +84,14 @@ export function ResultCard({ result, onScanNext, onRetry }: ResultCardProps) {
       role="alert"
       aria-live="assertive"
       className={cn(
-        'flex h-full w-full flex-col items-center justify-between p-6 text-center animate-in fade-in zoom-in-95 duration-200',
+        'scan-shell__panel flex h-full w-full flex-col items-center justify-between p-6 text-center animate-in fade-in zoom-in-95 duration-200',
         style.panel
       )}
     >
       <div className="flex w-full flex-1 flex-col items-center justify-center gap-6">
         <div
           className={cn(
-            'flex h-28 w-28 items-center justify-center rounded-full',
+            'scan-shell__hero-icon h-28 w-28 rounded-full',
             style.iconWrap
           )}
         >
@@ -124,7 +124,7 @@ export function ResultCard({ result, onScanNext, onRetry }: ResultCardProps) {
           <Button
             onClick={onRetry}
             size="lg"
-            className="h-14 w-full bg-background text-foreground text-lg font-semibold hover:bg-background/90"
+            className="scan-shell__button-secondary h-14 bg-background text-lg font-semibold hover:bg-background/90"
           >
             <RotateCcw className="mr-2 h-5 w-5" aria-hidden="true" />
             Try Again
@@ -138,8 +138,8 @@ export function ResultCard({ result, onScanNext, onRetry }: ResultCardProps) {
           className={cn(
             'h-14 w-full text-lg font-semibold',
             isSuccess
-              ? 'bg-success-foreground text-success hover:bg-success-foreground/90'
-              : 'bg-background text-foreground hover:bg-background/90'
+              ? 'scan-shell__button-secondary bg-success-foreground text-success hover:bg-success-foreground/90'
+              : 'scan-shell__button-primary bg-background text-foreground hover:bg-background/90'
           )}
         >
           {isSuccess

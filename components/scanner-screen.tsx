@@ -119,12 +119,12 @@ export function ScannerScreen() {
   )
 
   return (
-    <main className="relative mx-auto flex h-[100dvh] w-full max-w-md flex-col overflow-hidden bg-background">
+    <main className="scan-shell">
       {/* Header */}
-      <header className="z-20 flex items-center justify-between gap-3 border-b border-border bg-primary px-4 py-3 text-primary-foreground">
-        <div className="flex items-center gap-2">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent">
-            <ScanLine className="h-5 w-5 text-accent-foreground" aria-hidden="true" />
+      <header className="scan-shell__header z-20">
+        <div className="scan-shell__brand">
+          <div className="scan-shell__brand-icon">
+            <ScanLine className="h-5 w-5" aria-hidden="true" />
           </div>
           <div className="leading-tight">
             <p className="text-sm font-bold">Swag Redemption</p>
@@ -135,7 +135,7 @@ export function ScannerScreen() {
       </header>
 
       {/* Camera stage */}
-      <div className="relative flex-1 overflow-hidden bg-black">
+      <div className="scan-shell__body">
         {/* Video is always mounted so the ref persists across phases. */}
         <video
           ref={videoRef}
@@ -151,7 +151,7 @@ export function ScannerScreen() {
 
         {/* Idle */}
         {phase === 'idle' ? (
-          <div className="absolute inset-0 flex flex-col items-center justify-center gap-6 bg-background px-6 text-center">
+          <div className="scan-shell__panel scan-shell__panel--idle px-6">
             {error ? (
               <IdleError
                 title={ERROR_COPY[error].title}
@@ -159,7 +159,7 @@ export function ScannerScreen() {
               />
             ) : (
               <>
-                <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-primary">
+                <div className="scan-shell__hero-icon bg-primary/90">
                   <Camera className="h-10 w-10 text-primary-foreground" aria-hidden="true" />
                 </div>
                 <div className="space-y-2">
@@ -178,7 +178,7 @@ export function ScannerScreen() {
               <Button
                 onClick={beginScanning}
                 size="lg"
-                className="h-14 w-full text-lg font-semibold"
+                className="scan-shell__button-primary h-14 text-lg font-semibold"
               >
                 <ScanLine className="mr-2 h-5 w-5" aria-hidden="true" />
                 Start Scanning
@@ -187,7 +187,7 @@ export function ScannerScreen() {
                 onClick={() => setManualOpen(true)}
                 variant="outline"
                 size="lg"
-                className="h-12 w-full"
+                className="scan-shell__button-secondary h-12"
               >
                 <Keyboard className="mr-2 h-5 w-5" aria-hidden="true" />
                 Enter Code Manually
@@ -211,7 +211,7 @@ export function ScannerScreen() {
                   onClick={toggleFlash}
                   variant="secondary"
                   size="lg"
-                  className="h-12 gap-2 rounded-full bg-white/90 text-foreground hover:bg-white"
+                  className="scan-shell__button-secondary h-12 gap-2 bg-white/90 hover:bg-white"
                 >
                   {flashOn ? (
                     <ZapOff className="h-5 w-5" aria-hidden="true" />
@@ -225,7 +225,7 @@ export function ScannerScreen() {
                 onClick={() => setManualOpen(true)}
                 variant="secondary"
                 size="lg"
-                className="h-12 gap-2 rounded-full bg-white/90 text-foreground hover:bg-white"
+                className="scan-shell__button-secondary h-12 gap-2 bg-white/90 hover:bg-white"
               >
                 <Keyboard className="h-5 w-5" aria-hidden="true" />
                 Manual
@@ -292,19 +292,14 @@ function IdleError({ title, detail }: { title: string; detail: string }) {
 
 function ScanReticle() {
   return (
-    <div className="pointer-events-none absolute inset-0 z-[5] flex items-center justify-center">
-      {/* Dim mask around the frame */}
+    <div className="scan-shell__reticle pointer-events-none">
       <div className="absolute inset-0 bg-black/40" />
-      <div className="relative h-64 w-64">
-        {/* Punch-out clear window */}
-        <div className="absolute inset-0 rounded-2xl bg-transparent shadow-[0_0_0_9999px_rgba(0,0,0,0.4)]" />
-        {/* Corner brackets */}
-        <span className="absolute left-0 top-0 h-10 w-10 rounded-tl-2xl border-l-4 border-t-4 border-accent" />
-        <span className="absolute right-0 top-0 h-10 w-10 rounded-tr-2xl border-r-4 border-t-4 border-accent" />
-        <span className="absolute bottom-0 left-0 h-10 w-10 rounded-bl-2xl border-b-4 border-l-4 border-accent" />
-        <span className="absolute bottom-0 right-0 h-10 w-10 rounded-br-2xl border-b-4 border-r-4 border-accent" />
-        {/* Scan line */}
-        <div className="absolute inset-x-3 top-0 h-[3px] animate-scan-line rounded-full bg-accent shadow-[0_0_12px_2px] shadow-accent" />
+      <div className="scan-shell__reticle-window">
+        <span className="scan-shell__reticle-corner scan-shell__reticle-corner--tl" />
+        <span className="scan-shell__reticle-corner scan-shell__reticle-corner--tr" />
+        <span className="scan-shell__reticle-corner scan-shell__reticle-corner--bl" />
+        <span className="scan-shell__reticle-corner scan-shell__reticle-corner--br" />
+        <div className="scan-shell__reticle-line animate-scan-line" />
       </div>
     </div>
   )
@@ -322,7 +317,7 @@ function ManualEntry({
   onClose: () => void
 }) {
   return (
-    <div className="absolute inset-0 z-30 flex items-end bg-black/50">
+    <div className="scan-shell__sheet">
       <form
         onSubmit={onSubmit}
         className="w-full space-y-4 rounded-t-3xl bg-background p-6 animate-in slide-in-from-bottom duration-200"
@@ -339,7 +334,7 @@ function ManualEntry({
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder="e.g. SWAG-2026-ABCDE"
-          className="h-14 w-full rounded-xl border border-input bg-card px-4 font-mono text-lg outline-none focus:ring-2 focus:ring-ring"
+          className="scan-shell__sheet-input h-14 w-full rounded-xl border border-input bg-card px-4 font-mono text-lg outline-none focus:ring-2 focus:ring-ring"
           inputMode="text"
           autoCapitalize="characters"
           autoComplete="off"
@@ -349,12 +344,12 @@ function ManualEntry({
             type="button"
             variant="outline"
             size="lg"
-            className="h-12 flex-1"
+            className="scan-shell__button-secondary h-12 flex-1"
             onClick={onClose}
           >
             Cancel
           </Button>
-          <Button type="submit" size="lg" className="h-12 flex-1" disabled={!value.trim()}>
+          <Button type="submit" size="lg" className="scan-shell__button-primary h-12 flex-1" disabled={!value.trim()}>
             Validate
           </Button>
         </div>
