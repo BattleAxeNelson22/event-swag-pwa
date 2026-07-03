@@ -25,8 +25,8 @@ interface OutcomeStyle {
 const STYLES: Record<RedemptionOutcome, OutcomeStyle> = {
   success: {
     icon: CheckCircle2,
-    panel: 'bg-success text-success-foreground',
-    iconWrap: 'bg-success-foreground/15',
+    panel: 'bg-[#eaf7ee] text-[#14532d]',
+    iconWrap: 'bg-[#14532d]/12',
   },
   already_redeemed: {
     icon: XCircle,
@@ -99,20 +99,20 @@ export function ResultCard({ result, onScanNext, onRetry }: ResultCardProps) {
         </div>
 
         <div className="space-y-2">
-          <h1 className="text-3xl font-bold tracking-tight text-balance">
+          <h1 className="text-3xl font-bold tracking-tight text-balance text-[#14532d]">
             {result.title}
           </h1>
-          <p className="mx-auto max-w-xs text-base leading-relaxed opacity-90 text-pretty">
+          <p className="mx-auto max-w-xs text-base leading-relaxed text-[#166534] text-pretty">
             {result.detail}
           </p>
         </div>
 
         {result.code ? (
-          <div className="rounded-xl border border-white/30 bg-white/20 px-4 py-2 shadow-sm backdrop-blur-sm">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/80">
+          <div className="rounded-xl border border-[#166534]/20 bg-[#14532d]/10 px-4 py-2 shadow-sm">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#166534]/80">
               Redemption Code
             </p>
-            <p className="mt-1 font-mono text-lg font-semibold break-all text-white">
+            <p className="mt-1 font-mono text-lg font-semibold break-all text-[#14532d]">
               {result.code}
             </p>
           </div>
