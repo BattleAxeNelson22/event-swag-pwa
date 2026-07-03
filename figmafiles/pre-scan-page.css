@@ -1,0 +1,1100 @@
+/* pre-scan page */
+
+position: relative;
+width: 390px;
+height: 844px;
+
+background: #FFFFFF;
+border-radius: 50px;
+
+
+/* Page Template
+
+<p>Menu Item Detail Page</p>
+*/
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+padding: 0px;
+isolation: isolate;
+
+position: absolute;
+width: 390px;
+max-width: 767px;
+height: 844px;
+left: 0px;
+top: 0px;
+
+background: #FFFFFF;
+border-radius: 50px;
+
+
+/* .Native UI/Top */
+
+width: 390px;
+height: 62px;
+
+background: #FFFFFF;
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+align-self: stretch;
+flex-grow: 0;
+z-index: 2;
+
+
+/* .Status Bar */
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+padding: 0px;
+isolation: isolate;
+
+position: absolute;
+height: 62px;
+left: 0px;
+right: 0px;
+top: 0px;
+
+
+
+/* Status bar - iPhone */
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 21px 16px 19px;
+gap: 154px;
+
+width: 390px;
+height: 62px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+align-self: stretch;
+flex-grow: 0;
+z-index: 0;
+
+
+/* Time */
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 2px 0px 0px;
+gap: 10px;
+
+width: 102px;
+height: 22px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 1;
+
+
+/* Time */
+
+width: 37px;
+height: 22px;
+
+font-family: 'SF Pro';
+font-style: normal;
+font-weight: 590;
+font-size: 17px;
+line-height: 22px;
+/* identical to box height, or 129% */
+text-align: center;
+
+color: #000000;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* Levels */
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 1px 0px 0px;
+gap: 7px;
+
+width: 102px;
+height: 22px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+flex-grow: 1;
+
+
+/* Cellular Connection */
+
+width: 19.2px;
+height: 12.23px;
+
+background: #000000;
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* Wifi */
+
+width: 17.14px;
+height: 12.33px;
+
+background: #000000;
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+flex-grow: 0;
+
+
+/* Battery */
+
+width: 27.33px;
+height: 13px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 2;
+flex-grow: 0;
+
+
+/* Border */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 25px;
+left: calc(50% - 25px/2 + 24.01px);
+top: 22.73%;
+bottom: 18.18%;
+
+mix-blend-mode: normal;
+opacity: 0.35;
+border: 1px solid #000000;
+border-radius: 4.3px;
+
+
+/* Cap */
+
+position: absolute;
+width: 1.33px;
+left: calc(50% - 1.33px/2 + 38.17px);
+top: 44.46%;
+bottom: 37.02%;
+
+background: #000000;
+mix-blend-mode: normal;
+opacity: 0.4;
+
+
+/* Capacity */
+
+position: absolute;
+width: 21px;
+left: calc(50% - 21px/2 + 24.01px);
+top: 31.82%;
+bottom: 27.27%;
+
+background: #000000;
+border-radius: 2.5px;
+
+
+/* Dynamic Island */
+
+position: absolute;
+width: 124px;
+height: 36px;
+left: calc(50% - 124px/2);
+top: calc(50% - 36px/2 - 0.33px);
+
+background: #040404;
+border-radius: 18px;
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+flex-grow: 0;
+z-index: 1;
+
+
+/* Header */
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+align-items: center;
+padding: 0px 12px;
+
+width: 390px;
+max-width: 767px;
+height: 52px;
+
+background: #FFFFFF;
+border-radius: 0px;
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+align-self: stretch;
+flex-grow: 0;
+z-index: 1;
+
+
+/* .Base Navigation Item/Button */
+
+margin: 0 auto;
+display: none;
+width: 44px;
+height: 44px;
+
+border-radius: 0px;
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* Site Logo */
+
+margin: 0 auto;
+width: 128px;
+height: 52px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+flex-grow: 0;
+
+
+/* Culver's  */
+
+position: absolute;
+left: 18.75%;
+right: 18.75%;
+top: 15.38%;
+bottom: 15.38%;
+
+
+
+/* Logo */
+
+position: absolute;
+left: 0.25%;
+right: 0.11%;
+top: 0.4%;
+bottom: 0.6%;
+
+background: #005696;
+
+
+/* .Base Navigation Item/Button */
+
+margin: 0 auto;
+width: 44px;
+height: 44px;
+
+border-radius: 0px;
+
+/* Inside auto layout */
+flex: none;
+order: 2;
+flex-grow: 0;
+
+
+/* Focus */
+
+position: absolute;
+visibility: hidden;
+left: -2px;
+right: -2px;
+top: -2px;
+bottom: -2px;
+
+border: 2px solid #005696;
+border-radius: 6px;
+
+
+/* Icon */
+
+position: absolute;
+left: 25%;
+right: 25%;
+top: 25%;
+bottom: 25%;
+
+
+
+/* Icon */
+
+position: absolute;
+left: 8.33%;
+right: 8.25%;
+top: 8.33%;
+bottom: 8.33%;
+
+background: #005696;
+
+
+/* Container */
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+padding: 0px;
+
+width: 390px;
+height: 760px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 2;
+align-self: stretch;
+flex-grow: 0;
+z-index: 0;
+
+
+/* main */
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+padding: 0px;
+isolation: isolate;
+
+width: 390px;
+height: 739px;
+overflow-y: scroll;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+align-self: stretch;
+flex-grow: 0;
+
+
+/* Page Contents */
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+padding: 0px;
+gap: 8px;
+
+width: 390px;
+height: 404px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+align-self: stretch;
+flex-grow: 0;
+z-index: 0;
+
+
+/* content */
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+align-items: center;
+padding: 0px 24px;
+gap: 44px;
+
+width: 390px;
+height: 404px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+align-self: stretch;
+flex-grow: 0;
+
+
+/* Scan Image */
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+align-items: center;
+padding: 8px;
+gap: 10px;
+isolation: isolate;
+
+width: 138px;
+height: 138px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* Bottom Tab Bar/Scan */
+
+width: 122px;
+height: 122px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+z-index: 0;
+
+
+/* Vector */
+
+position: absolute;
+left: 8.33%;
+right: 8.33%;
+top: 8.33%;
+bottom: 8.33%;
+
+background: #005696;
+
+
+/* Group 2 */
+
+position: absolute;
+width: 140px;
+height: 140px;
+left: 0px;
+top: 0px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+flex-grow: 0;
+z-index: 1;
+
+
+/* Vector 1 */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 54px;
+height: 54px;
+left: 86px;
+top: 0px;
+
+border: 8px solid #005696;
+border-radius: 12px;
+
+
+/* Vector 3 */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 54px;
+height: 54px;
+left: 0px;
+top: 0px;
+
+border: 8px solid #005696;
+border-radius: 12px;
+transform: matrix(-1, 0, 0, 1, 0, 0);
+
+
+/* Vector 2 */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 54px;
+height: 54px;
+left: 86px;
+top: 86px;
+
+border: 8px solid #005696;
+border-radius: 12px;
+transform: matrix(1, 0, 0, -1, 0, 0);
+
+
+/* Vector 4 */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 54px;
+height: 54px;
+left: 0px;
+top: 86px;
+
+border: 8px solid #005696;
+border-radius: 12px;
+transform: rotate(180deg);
+
+
+/* text section */
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+padding: 0px;
+gap: 24px;
+
+width: 342px;
+height: 222px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+align-self: stretch;
+flex-grow: 0;
+
+
+/* Eyebrow + Heading */
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+padding: 0px;
+
+width: 342px;
+height: 44px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+align-self: stretch;
+flex-grow: 0;
+
+
+/* Eyebrow */
+
+display: none;
+width: 319px;
+height: 18px;
+
+/* display/heading/small
+
+display
+*/
+font-family: 'Brothers OT';
+font-style: normal;
+font-weight: 700;
+font-size: 18px;
+line-height: 100%;
+/* identical to box height, or 18px */
+text-align: center;
+text-transform: uppercase;
+
+color: #197AAB;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+align-self: stretch;
+flex-grow: 0;
+
+
+/* Heading */
+
+width: 342px;
+height: 44px;
+
+/* display/heading/xlarge
+
+Display H1
+Responsive
+Display: Used in hero sections, banners, marketing areas.
+*/
+font-family: 'League Gothic';
+font-style: normal;
+font-weight: 400;
+font-size: 44px;
+line-height: 100%;
+/* identical to box height, or 44px */
+text-align: center;
+text-transform: uppercase;
+
+color: #005696;
+
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+align-self: stretch;
+flex-grow: 0;
+
+
+/* Subhead */
+
+display: none;
+width: 319px;
+height: 18px;
+
+/* display/heading/small
+
+display
+*/
+font-family: 'Brothers OT';
+font-style: normal;
+font-weight: 700;
+font-size: 18px;
+line-height: 100%;
+/* identical to box height, or 18px */
+text-align: center;
+text-transform: uppercase;
+
+color: #197AAB;
+
+
+/* Inside auto layout */
+flex: none;
+order: 2;
+align-self: stretch;
+flex-grow: 0;
+
+
+/* Scan Delicious Rewards user reward code. Upon successful scan, distribute VIP merch. */
+
+width: 342px;
+height: 44px;
+
+/* text/medium
+
+Default paragraph style
+*/
+font-family: 'Roboto Flex';
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+line-height: 140%;
+/* or 22px */
+text-align: center;
+font-feature-settings: 'liga' off;
+
+color: #262626;
+
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+align-self: stretch;
+flex-grow: 0;
+
+
+/* button group */
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+align-items: center;
+padding: 0px;
+gap: 16px;
+
+width: 240px;
+height: 86px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 2;
+flex-grow: 0;
+
+
+/* CTA Button */
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 8px 16px;
+gap: 8px;
+
+width: 240px;
+min-width: 112px;
+max-width: 352px;
+height: 44px;
+min-height: 44px;
+
+background: #005696;
+border-radius: 4px;
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+align-self: stretch;
+flex-grow: 0;
+
+
+/* button-inner */
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 0px;
+gap: 8px;
+
+width: 93px;
+height: 24px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* Plus */
+
+display: none;
+width: 20px;
+height: 20px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* Label */
+
+width: 93px;
+height: 24px;
+
+/* ui/condensed/large
+
+CTA Button
+*/
+font-family: 'League Gothic';
+font-style: normal;
+font-weight: 400;
+font-size: 24px;
+line-height: 100%;
+/* identical to box height, or 24px */
+display: flex;
+align-items: center;
+text-align: center;
+text-transform: uppercase;
+
+color: #FFFFFF;
+
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+flex-grow: 0;
+
+
+/* mail */
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+padding: 0px;
+gap: 10px;
+
+display: none;
+width: 18px;
+height: 18px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 2;
+flex-grow: 0;
+
+
+/* $XX.XX */
+
+display: none;
+width: 159px;
+height: 20px;
+
+/* ui/condensed/medium */
+font-family: 'League Gothic';
+font-style: normal;
+font-weight: 400;
+font-size: 20px;
+line-height: 100%;
+/* identical to box height, or 20px */
+display: flex;
+align-items: center;
+text-align: right;
+text-transform: uppercase;
+
+color: #FFFFFF;
+
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+flex-grow: 1;
+
+
+/* Compact Button */
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 6px 8px;
+isolation: isolate;
+
+width: 158px;
+height: 26px;
+
+border-radius: 4px;
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+flex-grow: 0;
+
+
+/* Mail */
+
+display: none;
+width: 14px;
+height: 14px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+z-index: 0;
+
+
+/* Label Container */
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 0px 4px;
+
+width: 142px;
+height: 14px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+flex-grow: 0;
+z-index: 1;
+
+
+/* Label */
+
+width: 134px;
+height: 14px;
+
+/* ui/xsmall bold */
+font-family: 'Roboto Flex';
+font-style: normal;
+font-weight: 600;
+font-size: 14px;
+line-height: 100%;
+/* identical to box height, or 14px */
+display: flex;
+align-items: center;
+text-align: center;
+
+color: #005696;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* Mail */
+
+display: none;
+width: 14px;
+height: 14px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 2;
+flex-grow: 0;
+z-index: 2;
+
+
+/* Focus ring */
+
+box-sizing: border-box;
+
+position: absolute;
+display: none;
+left: -4px;
+right: -4px;
+top: -4px;
+bottom: -4px;
+
+border: 2px solid #005696;
+border-radius: 8px;
+
+/* Inside auto layout */
+flex: none;
+order: 3;
+flex-grow: 0;
+z-index: 3;
+
+
+/* .Template Bottom Bar */
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+align-items: center;
+padding: 8px;
+isolation: isolate;
+
+width: 393px;
+height: 21px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+flex-grow: 0;
+
+
+/* Toast
+
+<p>A lightweight, non-intrusive notification for brief feedback, typically auto-dismissed.</p>
+*/
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: flex-start;
+padding: 12px;
+gap: 8px;
+
+display: none;
+width: 345px;
+height: 72px;
+
+background: #F0FDF4;
+border: 3px solid #1A803D;
+border-radius: 12px;
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+z-index: 0;
+
+
+/* Native UI */
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+justify-content: flex-end;
+align-items: center;
+padding: 0px;
+
+position: absolute;
+height: 21px;
+left: 0px;
+right: 0px;
+bottom: 0px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+flex-grow: 0;
+z-index: 1;
+
+
+/* Home Indicator */
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+padding: 8px 0px;
+
+width: 393px;
+height: 21px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+align-self: stretch;
+flex-grow: 0;
+
+
+/* Home Indicator */
+
+width: 144px;
+height: 5px;
+
+background: #000000;
+border-radius: 100px;
+transform: matrix(-1, 0, 0, 1, 0, 0);
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;

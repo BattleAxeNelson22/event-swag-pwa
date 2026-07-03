@@ -1,0 +1,546 @@
+/* Scan screen */
+
+position: absolute;
+width: 390px;
+height: 782px;
+left: 0px;
+top: 62px;
+
+
+
+/* Rectangle 1 */
+
+position: absolute;
+visibility: hidden;
+width: 390px;
+height: 728px;
+left: 0px;
+top: 0.5px;
+
+background: url(Iphone-X-in-Hand-Mockup.png);
+
+
+/* Rectangle 2 */
+
+position: absolute;
+visibility: hidden;
+width: 390px;
+height: 844px;
+left: 0px;
+top: 0px;
+
+background: #262626;
+opacity: 0.5;
+
+
+/* Rectangle 3 */
+
+position: absolute;
+width: 390px;
+height: 844px;
+left: 0px;
+top: 0px;
+
+background: #1A803D;
+opacity: 0.8;
+
+
+/* text section */
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+padding: 0px;
+gap: 12px;
+
+position: absolute;
+width: 319px;
+height: 162px;
+left: 35px;
+top: 310px;
+
+
+
+/* Icon Component */
+
+width: 106px;
+height: 106px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* Checkmark Circle */
+
+position: absolute;
+left: 0%;
+right: 0%;
+top: 0%;
+bottom: 0%;
+
+
+
+/* Icon */
+
+position: absolute;
+left: 4.17%;
+right: 4.17%;
+top: 4.17%;
+bottom: 4.17%;
+
+background: #FFFFFF;
+
+
+/* Eyebrow + Heading */
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+padding: 0px;
+
+width: 106px;
+height: 44px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+flex-grow: 0;
+
+
+/* Eyebrow */
+
+display: none;
+width: 319px;
+height: 18px;
+
+/* display/heading/small
+
+display
+*/
+font-family: 'Brothers OT';
+font-style: normal;
+font-weight: 700;
+font-size: 18px;
+line-height: 100%;
+/* identical to box height, or 18px */
+text-align: center;
+text-transform: uppercase;
+
+color: #197AAB;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+align-self: stretch;
+flex-grow: 0;
+
+
+/* Heading */
+
+width: 106px;
+height: 44px;
+
+/* display/heading/xlarge
+
+Display H1
+Responsive
+Display: Used in hero sections, banners, marketing areas.
+*/
+font-family: 'League Gothic';
+font-style: normal;
+font-weight: 400;
+font-size: 44px;
+line-height: 100%;
+/* identical to box height, or 44px */
+text-align: center;
+text-transform: uppercase;
+
+color: #FFFFFF;
+
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+align-self: stretch;
+flex-grow: 0;
+
+
+/* Subhead */
+
+display: none;
+width: 319px;
+height: 18px;
+
+/* display/heading/small
+
+display
+*/
+font-family: 'Brothers OT';
+font-style: normal;
+font-weight: 700;
+font-size: 18px;
+line-height: 100%;
+/* identical to box height, or 18px */
+text-align: center;
+text-transform: uppercase;
+
+color: #197AAB;
+
+
+/* Inside auto layout */
+flex: none;
+order: 2;
+align-self: stretch;
+flex-grow: 0;
+
+
+/* Scan Delicious Rewards user reward code. Upon scan distribute VIP merch */
+
+display: none;
+width: 319px;
+height: 44px;
+
+/* text/medium
+
+Default paragraph style
+*/
+font-family: 'Roboto Flex';
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+line-height: 140%;
+/* or 22px */
+text-align: center;
+font-feature-settings: 'liga' off;
+
+color: #262626;
+
+
+/* Inside auto layout */
+flex: none;
+order: 2;
+align-self: stretch;
+flex-grow: 0;
+
+
+/* button group */
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+align-items: center;
+padding: 0px;
+gap: 16px;
+
+display: none;
+width: 240px;
+height: 44px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 3;
+flex-grow: 0;
+
+
+/* button group */
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+align-items: center;
+padding: 0px;
+gap: 16px;
+
+position: absolute;
+width: 240px;
+height: 44px;
+left: 74.5px;
+top: 636px;
+
+
+
+/* CTA Button */
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 8px 16px;
+gap: 8px;
+
+width: 240px;
+min-width: 112px;
+max-width: 352px;
+height: 44px;
+min-height: 44px;
+
+background: #FFFFFF;
+border-radius: 4px;
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+align-self: stretch;
+flex-grow: 0;
+
+
+/* button-inner */
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 0px;
+gap: 8px;
+
+width: 135px;
+height: 24px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* mail */
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+padding: 0px;
+gap: 10px;
+
+display: none;
+width: 18px;
+height: 18px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* Label */
+
+width: 135px;
+height: 24px;
+
+/* ui/condensed/large
+
+CTA Button
+*/
+font-family: 'League Gothic';
+font-style: normal;
+font-weight: 400;
+font-size: 24px;
+line-height: 100%;
+/* identical to box height, or 24px */
+display: flex;
+align-items: center;
+text-align: center;
+text-transform: uppercase;
+
+color: #005696;
+
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+flex-grow: 0;
+
+
+/* mail */
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+padding: 0px;
+gap: 10px;
+
+display: none;
+width: 18px;
+height: 18px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 2;
+flex-grow: 0;
+
+
+/* $XX.XX */
+
+display: none;
+width: 159px;
+height: 18px;
+
+/* ui/condensed/medium */
+font-family: 'League Gothic';
+font-style: normal;
+font-weight: 400;
+font-size: 20px;
+line-height: 100%;
+/* or 20px */
+display: flex;
+align-items: center;
+text-align: right;
+text-transform: uppercase;
+
+color: #005696;
+
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+flex-grow: 1;
+
+
+/* Compact Button */
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 6px 8px;
+
+display: none;
+width: 158px;
+height: 26px;
+
+border-radius: 4px;
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+flex-grow: 0;
+
+
+/* Compact Button */
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 6px 8px;
+isolation: isolate;
+
+position: absolute;
+width: 158px;
+height: 26px;
+left: 116px;
+top: 696px;
+
+border-radius: 4px;
+
+
+/* Mail */
+
+display: none;
+width: 14px;
+height: 14px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+z-index: 0;
+
+
+/* Label Container */
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 0px 4px;
+
+width: 142px;
+height: 14px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+flex-grow: 0;
+z-index: 1;
+
+
+/* Label */
+
+width: 134px;
+height: 14px;
+
+/* ui/xsmall bold */
+font-family: 'Roboto Flex';
+font-style: normal;
+font-weight: 600;
+font-size: 14px;
+line-height: 100%;
+/* identical to box height, or 14px */
+display: flex;
+align-items: center;
+text-align: center;
+
+color: #FFFFFF;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* Mail */
+
+display: none;
+width: 14px;
+height: 14px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 2;
+flex-grow: 0;
+z-index: 2;
+
+
+/* Focus ring */
+
+box-sizing: border-box;
+
+position: absolute;
+display: none;
+left: -4px;
+right: -4px;
+top: -4px;
+bottom: -4px;
+
+border: 2px solid #E5EEF4;
+border-radius: 8px;
+
+/* Inside auto layout */
+flex: none;
+order: 3;
+flex-grow: 0;
+z-index: 3;
