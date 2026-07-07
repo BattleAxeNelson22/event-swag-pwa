@@ -75,7 +75,7 @@ export function SessionStats({
                     {entry.outcome === 'success' ? 'Success' : 'Failed'}
                   </span>
                 </div>
-                <p className="mt-0.5 text-[10px] leading-4 text-primary-foreground/80">
+                <p className="mt-0.5 text-[10px] leading-4 text-white/90">
                   {formatHistoryTimestamp(entry.timestamp)}
                 </p>
                 <p
