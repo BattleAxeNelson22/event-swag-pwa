@@ -147,7 +147,7 @@ function Stat({
       <span
         className={
           tone === 'success'
-            ? 'text-base font-bold leading-none text-accent'
+            ? 'text-base font-bold leading-none text-success'
             : 'text-base font-bold leading-none text-primary-foreground'
         }
       >

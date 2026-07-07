@@ -146,9 +146,7 @@ export function ScannerScreen() {
     setResult(res)
     setCounts((prev) => ({
       success: prev.success + (res.outcome === 'success' ? 1 : 0),
-      failed:
-        prev.failed +
-        (res.outcome !== 'success' && res.outcome !== 'error' ? 1 : 0),
+      failed: prev.failed + (res.outcome === 'success' ? 0 : 1),
     }))
 
     const entry: RedemptionHistoryEntry = {
