@@ -434,9 +434,32 @@ function SettingsSheet({
   onThemeChange: (theme: ThemeMode) => void
   onClose: () => void
 }) {
+  const touchStartY = useRef<number | null>(null)
+
+  const handleTouchStart = (event: React.TouchEvent) => {
+    touchStartY.current = event.touches[0]?.clientY ?? null
+  }
+
+  const handleTouchEnd = (event: React.TouchEvent) => {
+    if (touchStartY.current === null) return
+    const deltaY = (event.changedTouches[0]?.clientY ?? 0) - touchStartY.current
+    if (deltaY > 70) {
+      onClose()
+    }
+    touchStartY.current = null
+  }
+
   return (
-    <div className="scan-shell__sheet">
-      <div className="w-full space-y-4 rounded-t-3xl bg-background p-6 animate-in slide-in-from-bottom duration-200">
+    <div
+      className="scan-shell__sheet"
+      onClick={onClose}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+    >
+      <div
+        className="w-full space-y-4 rounded-t-3xl bg-background p-6 animate-in slide-in-from-bottom duration-200"
+        onClick={(event) => event.stopPropagation()}
+      >
         <div className="mx-auto h-1.5 w-12 rounded-full bg-muted" />
         <div className="flex items-start justify-between gap-3">
           <div>

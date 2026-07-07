@@ -61,7 +61,7 @@ export function SessionStats({
           <div className="flex items-center justify-center">
             <Stat label="Redeemed" value={counts.success} tone="success" />
           </div>
-          <div className="flex items-center justify-center gap-1 rounded-full bg-black/10 px-2 py-1 text-[9px] font-semibold uppercase tracking-[0.16em] text-primary-foreground/80">
+          <div className="flex items-center justify-center gap-1 rounded-full bg-foreground/10 px-2 py-1 text-[9px] font-semibold uppercase tracking-[0.16em] text-foreground/90">
             <span>History</span>
             <ChevronDown
               className={cn(
