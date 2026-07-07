@@ -450,15 +450,12 @@ function SettingsSheet({
   }
 
   return (
-    <div
-      className="scan-shell__sheet"
-      onClick={onClose}
-      onTouchStart={handleTouchStart}
-      onTouchEnd={handleTouchEnd}
-    >
+    <div className="scan-shell__sheet" onClick={onClose}>
       <div
         className="w-full space-y-4 rounded-t-3xl bg-background p-6 animate-in slide-in-from-bottom duration-200"
         onClick={(event) => event.stopPropagation()}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
       >
         <div className="mx-auto h-1.5 w-12 rounded-full bg-muted" />
         <div className="flex items-start justify-between gap-3">
