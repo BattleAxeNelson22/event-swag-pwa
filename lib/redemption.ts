@@ -16,6 +16,8 @@ export interface RedemptionResult {
   title: string
   /** Supporting detail / failure reason shown under the headline. */
   detail: string
+  /** Optional prize name returned by a successful redemption response. */
+  prizeName?: string
   /** Raw upstream payload, useful for debugging / audit. */
   raw?: unknown
 }
@@ -105,18 +107,30 @@ export function interpretResponse(
   httpStatus: number,
   body: unknown
 ): RedemptionResult {
-  const build = (outcome: RedemptionOutcome): RedemptionResult => ({
-    outcome,
-    code,
-    title: OUTCOME_COPY[outcome].title,
-    detail: OUTCOME_COPY[outcome].detail,
-    raw: body,
-  })
-
-  if (httpStatus >= 500 || httpStatus === 0) return build('error')
-
   const record =
     body && typeof body === 'object' ? (body as Record<string, unknown>) : {}
+
+  const build = (outcome: RedemptionOutcome): RedemptionResult => {
+    const prizeName = String(
+      record.prizeName ??
+        record.prize ??
+        record.rewardName ??
+        record.reward ??
+        record.item ??
+        ''
+    ).trim()
+
+    return {
+      outcome,
+      code,
+      title: OUTCOME_COPY[outcome].title,
+      detail: OUTCOME_COPY[outcome].detail,
+      ...(outcome === 'success' && prizeName ? { prizeName } : {}),
+      raw: body,
+    }
+  }
+
+  if (httpStatus >= 500 || httpStatus === 0) return build('error')
 
   // Prefer an explicit reason if a real API provides one.
   const reason = String(

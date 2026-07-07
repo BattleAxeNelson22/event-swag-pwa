@@ -5,11 +5,70 @@ export interface SessionCounts {
   failed: number
 }
 
-export function SessionStats({ counts }: { counts: SessionCounts }) {
+export interface RedemptionHistoryEntry {
+  id: string
+  code: string
+  outcome: 'success' | 'already_redeemed' | 'invalid' | 'expired' | 'error'
+  timestamp: string
+  summary: string
+  reason?: string
+  prizeName?: string
+}
+
+export function SessionStats({
+  counts,
+  history,
+}: {
+  counts: SessionCounts
+  history: RedemptionHistoryEntry[]
+}) {
   return (
-    <div className="flex items-center gap-2" aria-label="Session totals">
-      <Stat label="Redeemed" value={counts.success} tone="success" />
-      <Stat label="Rejected" value={counts.failed} tone="failed" />
+    <div className="flex flex-col items-end gap-2" aria-label="Session totals">
+      <div className="flex items-center gap-2">
+        <Stat label="Redeemed" value={counts.success} tone="success" />
+        <Stat label="Rejected" value={counts.failed} tone="failed" />
+      </div>
+
+      {history.length > 0 ? (
+        <div className="w-[280px] max-w-[calc(100vw-2rem)] rounded-xl border border-white/10 bg-black/10 p-2.5 text-left shadow-sm">
+          <p className="mb-1.5 text-[10px] font-semibold uppercase tracking-[0.2em] text-primary-foreground/70">
+            Last 5 results
+          </p>
+          <ul className="space-y-1.5">
+            {history.map((entry) => (
+              <li
+                key={entry.id}
+                className="rounded-lg bg-primary-foreground/10 px-2 py-1.5"
+              >
+                <div className="flex items-center justify-between gap-2">
+                  <span className="truncate font-mono text-[10px] font-semibold">
+                    {entry.code}
+                  </span>
+                  <span
+                    className={
+                      entry.outcome === 'success'
+                        ? 'text-[10px] font-semibold text-accent'
+                        : 'text-[10px] font-semibold text-primary-foreground'
+                    }
+                  >
+                    {entry.outcome === 'success' ? 'Success' : 'Failed'}
+                  </span>
+                </div>
+                <p className="mt-0.5 text-[10px] leading-4 text-primary-foreground/80">
+                  {formatHistoryTimestamp(entry.timestamp)}
+                </p>
+                <p className="text-[10px] leading-4 text-primary-foreground/80">
+                  {entry.outcome === 'success'
+                    ? entry.prizeName
+                      ? `Prize: ${entry.prizeName}`
+                      : 'Prize recorded'
+                    : `Reason: ${entry.reason ?? 'No reason provided'}`}
+                </p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
     </div>
   )
 }
@@ -39,4 +98,17 @@ function Stat({
       </span>
     </div>
   )
+}
+
+function formatHistoryTimestamp(timestamp: string) {
+  try {
+    return new Intl.DateTimeFormat(undefined, {
+      month: 'short',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: '2-digit',
+    }).format(new Date(timestamp))
+  } catch {
+    return timestamp
+  }
 }

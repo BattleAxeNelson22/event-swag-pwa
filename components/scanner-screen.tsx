@@ -12,13 +12,19 @@ import {
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { ResultCard } from '@/components/result-card'
-import { SessionStats, type SessionCounts } from '@/components/session-stats'
+import {
+  SessionStats,
+  type RedemptionHistoryEntry,
+  type SessionCounts,
+} from '@/components/session-stats'
 import { useQrScanner, type ScannerError } from '@/hooks/use-qr-scanner'
 import { redeemCode } from '@/lib/redeem-client'
 import { extractCode, type RedemptionResult } from '@/lib/redemption'
 import { cn } from '@/lib/utils'
 
 type Phase = 'idle' | 'scanning' | 'validating' | 'result'
+
+const HISTORY_STORAGE_KEY = 'swag-redemption-history-v1'
 
 const ERROR_COPY: Record<ScannerError, { title: string; detail: string }> = {
   'no-camera': {
@@ -47,11 +53,38 @@ export function ScannerScreen() {
     success: 0,
     failed: 0,
   })
+  const [history, setHistory] = useState<RedemptionHistoryEntry[]>([])
   const [manualOpen, setManualOpen] = useState(false)
   const [manualCode, setManualCode] = useState('')
 
   // Guards against processing multiple frames of the same code.
   const processingRef = useRef(false)
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+
+    try {
+      const stored = window.localStorage.getItem(HISTORY_STORAGE_KEY)
+      if (!stored) return
+
+      const parsed = JSON.parse(stored) as RedemptionHistoryEntry[]
+      if (!Array.isArray(parsed)) return
+
+      const recent = parsed.slice(0, 5)
+      setHistory(recent)
+      setCounts({
+        success: recent.filter((entry) => entry.outcome === 'success').length,
+        failed: recent.filter((entry) => entry.outcome !== 'success').length,
+      })
+    } catch {
+      // Ignore invalid persisted history and continue with an empty list.
+    }
+  }, [])
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    window.localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(history))
+  }, [history])
 
   const validate = useCallback(async (rawValue: string) => {
     const code = extractCode(rawValue)
@@ -69,6 +102,23 @@ export function ScannerScreen() {
         prev.failed +
         (res.outcome !== 'success' && res.outcome !== 'error' ? 1 : 0),
     }))
+
+    const entry: RedemptionHistoryEntry = {
+      id: `${Date.now()}-${code}`,
+      code,
+      outcome: res.outcome,
+      timestamp: new Date().toISOString(),
+      summary:
+        res.outcome === 'success'
+          ? res.prizeName
+            ? `Success • ${res.prizeName}`
+            : 'Success'
+          : `Failure • ${res.detail || 'No reason provided'}`,
+      reason: res.outcome === 'success' ? undefined : res.detail,
+      prizeName: res.outcome === 'success' ? res.prizeName : undefined,
+    }
+
+    setHistory((prev) => [entry, ...prev].slice(0, 5))
     setPhase('result')
   }, [])
 
@@ -131,7 +181,7 @@ export function ScannerScreen() {
             <p className="text-xs opacity-80">Event Scanner</p>
           </div>
         </div>
-        <SessionStats counts={counts} />
+        <SessionStats counts={counts} history={history} />
       </header>
 
       {/* Camera stage */}
