@@ -58,9 +58,8 @@ export function SessionStats({
         aria-expanded={open}
       >
         <div className="flex flex-col gap-2">
-          <div className="flex items-center justify-between gap-2">
+          <div className="flex items-center justify-center">
             <Stat label="Redeemed" value={counts.success} tone="success" />
-            <Stat label="Rejected" value={counts.failed} tone="failed" />
           </div>
           <div className="flex items-center justify-center gap-1 rounded-full bg-black/10 px-2 py-1 text-[9px] font-semibold uppercase tracking-[0.16em] text-primary-foreground/80">
             <span>History</span>
@@ -140,17 +139,11 @@ function Stat({
 }: {
   label: string
   value: number
-  tone: 'success' | 'failed'
+  tone: 'success'
 }) {
   return (
     <div className="flex min-w-14 flex-col items-center rounded-lg bg-primary-foreground/10 px-2.5 py-1">
-      <span
-        className={
-          tone === 'success'
-            ? 'text-base font-bold leading-none text-success'
-            : 'text-base font-bold leading-none text-primary-foreground'
-        }
-      >
+      <span className="text-base font-bold leading-none text-success">
         {value}
       </span>
       <span className="text-[10px] font-medium uppercase tracking-wide opacity-80">
