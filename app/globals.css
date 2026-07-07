@@ -163,8 +163,8 @@
 
 body {
   min-height: 100vh;
-  background: linear-gradient(180deg, #f5f9fc 0%, #eef4f8 100%);
-  color: #262626;
+  background: var(--background);
+  color: var(--foreground);
 }
 
 :root {
@@ -185,8 +185,8 @@ body {
   min-height: 100dvh;
   margin: 0 auto;
   overflow: hidden;
-  background: var(--figma-white);
-  color: var(--figma-text);
+  background: var(--card);
+  color: var(--foreground);
   box-shadow: 0 24px 80px rgba(0, 0, 0, 0.16);
 }
 
@@ -196,8 +196,8 @@ body {
   justify-content: space-between;
   gap: 0.75rem;
   padding: 0.875rem 1rem;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-  background: var(--figma-white);
+  border-bottom: 1px solid var(--border);
+  background: var(--card);
 }
 
 .scan-shell__brand {
@@ -221,7 +221,7 @@ body {
   position: relative;
   flex: 1;
   overflow: hidden;
-  background: linear-gradient(180deg, #ffffff 0%, #f6f9fc 100%);
+  background: linear-gradient(180deg, var(--card) 0%, var(--background) 100%);
 }
 
 .scan-shell__panel {
@@ -234,7 +234,7 @@ body {
   gap: 1.25rem;
   padding: 1.5rem;
   text-align: center;
-  background: var(--figma-white);
+  background: var(--card);
 }
 
 .scan-shell__panel--success {
@@ -273,9 +273,9 @@ body {
 }
 
 .scan-shell__button-secondary {
-  background: var(--figma-white);
-  color: var(--figma-blue);
-  box-shadow: inset 0 0 0 1px rgba(0, 86, 150, 0.2);
+  background: var(--card);
+  color: var(--foreground);
+  box-shadow: inset 0 0 0 1px var(--border);
 }
 
 .scan-shell__button-primary:hover,
@@ -296,16 +296,17 @@ body {
   width: 100%;
   border-top-left-radius: 1.5rem;
   border-top-right-radius: 1.5rem;
-  background: var(--figma-white);
+  background: var(--card);
   padding: 1.25rem;
   box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.2);
 }
 
 .scan-shell__sheet input {
   width: 100%;
-  border: 1px solid rgba(0, 0, 0, 0.12);
+  border: 1px solid var(--border);
   border-radius: 0.95rem;
-  background: #f8fafc;
+  background: var(--background);
+  color: var(--foreground);
   padding: 0.95rem 1rem;
   font-family: 'SFMono-Regular', Consolas, monospace;
 }
