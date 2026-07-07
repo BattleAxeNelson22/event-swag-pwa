@@ -57,13 +57,12 @@ export function SessionStats({
         className="w-full max-w-[220px] rounded-xl border border-white/10 bg-primary-foreground/10 px-2.5 py-2 text-left transition hover:bg-primary-foreground/20"
         aria-expanded={open}
       >
-        <div className="flex items-center justify-between gap-2">
-          <div className="flex min-w-0 items-center gap-2">
+        <div className="flex flex-col gap-2">
+          <div className="flex items-center justify-between gap-2">
             <Stat label="Redeemed" value={counts.success} tone="success" />
-            <div className="h-7 w-px shrink-0 bg-white/15" />
             <Stat label="Rejected" value={counts.failed} tone="failed" />
           </div>
-          <div className="flex shrink-0 items-center gap-1 rounded-full bg-black/10 px-2 py-1 text-[9px] font-semibold uppercase tracking-[0.16em] text-primary-foreground/80">
+          <div className="flex items-center justify-center gap-1 rounded-full bg-black/10 px-2 py-1 text-[9px] font-semibold uppercase tracking-[0.16em] text-primary-foreground/80">
             <span>History</span>
             <ChevronDown
               className={cn(
