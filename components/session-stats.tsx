@@ -51,24 +51,27 @@ export function SessionStats({
       className="relative flex flex-col items-end gap-2"
       aria-label="Session totals"
     >
-      <div className="flex items-center gap-2">
-        <button
-          type="button"
-          onClick={() => setOpen((prev) => !prev)}
-          className="rounded-lg bg-primary-foreground/10 px-2.5 py-1 transition hover:bg-primary-foreground/20"
-          aria-expanded={open}
-        >
+      <button
+        type="button"
+        onClick={() => setOpen((prev) => !prev)}
+        className="flex items-center gap-2 rounded-xl border border-white/10 bg-primary-foreground/10 px-3 py-2 transition hover:bg-primary-foreground/20"
+        aria-expanded={open}
+      >
+        <div className="flex items-center gap-2">
           <Stat label="Redeemed" value={counts.success} tone="success" />
-        </button>
-        <button
-          type="button"
-          onClick={() => setOpen((prev) => !prev)}
-          className="rounded-lg bg-primary-foreground/10 px-2.5 py-1 transition hover:bg-primary-foreground/20"
-          aria-expanded={open}
-        >
+          <div className="h-7 w-px bg-white/15" />
           <Stat label="Rejected" value={counts.failed} tone="failed" />
-        </button>
-      </div>
+        </div>
+        <div className="flex items-center gap-1 rounded-full bg-black/10 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-primary-foreground/80">
+          <span>History</span>
+          <ChevronDown
+            className={cn(
+              'h-3 w-3 transition-transform',
+              open ? 'rotate-180' : ''
+            )}
+          />
+        </div>
+      </button>
 
       {history.length > 0 && open ? (
         <div className="absolute right-0 top-full z-50 mt-2 w-[280px] max-w-[calc(100vw-2rem)] rounded-xl border border-white/10 bg-slate-900/95 p-2.5 text-left shadow-2xl backdrop-blur">
