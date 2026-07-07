@@ -1,5 +1,8 @@
 'use client'
 
+import { useState } from 'react'
+import { ChevronDown } from 'lucide-react'
+
 export interface SessionCounts {
   success: number
   failed: number
@@ -22,18 +25,35 @@ export function SessionStats({
   counts: SessionCounts
   history: RedemptionHistoryEntry[]
 }) {
+  const [open, setOpen] = useState(false)
+
   return (
     <div className="flex flex-col items-end gap-2" aria-label="Session totals">
       <div className="flex items-center gap-2">
-        <Stat label="Redeemed" value={counts.success} tone="success" />
+        <button
+          type="button"
+          onClick={() => setOpen((prev) => !prev)}
+          className="rounded-lg bg-primary-foreground/10 px-2.5 py-1 transition hover:bg-primary-foreground/20"
+          aria-expanded={open}
+        >
+          <Stat label="Redeemed" value={counts.success} tone="success" />
+        </button>
         <Stat label="Rejected" value={counts.failed} tone="failed" />
       </div>
 
-      {history.length > 0 ? (
+      {history.length > 0 && open ? (
         <div className="w-[280px] max-w-[calc(100vw-2rem)] rounded-xl border border-white/10 bg-black/10 p-2.5 text-left shadow-sm">
-          <p className="mb-1.5 text-[10px] font-semibold uppercase tracking-[0.2em] text-primary-foreground/70">
-            Last 5 results
-          </p>
+          <div className="mb-1.5 flex items-center justify-between">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-primary-foreground/70">
+              Last 5 results
+            </p>
+            <ChevronDown
+              className={cn(
+                'h-3.5 w-3.5 text-primary-foreground/70 transition-transform',
+                open ? 'rotate-180' : ''
+              )}
+            />
+          </div>
           <ul className="space-y-1.5">
             {history.map((entry) => (
               <li
