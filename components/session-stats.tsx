@@ -62,7 +62,7 @@ export function SessionStats({
                 className="rounded-lg bg-primary-foreground/10 px-2 py-1.5"
               >
                 <div className="flex items-center justify-between gap-2">
-                  <span className="truncate font-mono text-[10px] font-semibold">
+                  <span className="truncate font-mono text-[10px] font-semibold text-white">
                     {entry.code}
                   </span>
                   <span
