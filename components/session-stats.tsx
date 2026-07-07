@@ -68,8 +68,8 @@ export function SessionStats({
                   <span
                     className={
                       entry.outcome === 'success'
-                        ? 'text-[10px] font-semibold text-accent'
-                        : 'text-[10px] font-semibold text-primary-foreground'
+                        ? 'text-[10px] font-semibold text-emerald-400'
+                        : 'text-[10px] font-semibold text-rose-400'
                     }
                   >
                     {entry.outcome === 'success' ? 'Success' : 'Failed'}
@@ -78,7 +78,14 @@ export function SessionStats({
                 <p className="mt-0.5 text-[10px] leading-4 text-primary-foreground/80">
                   {formatHistoryTimestamp(entry.timestamp)}
                 </p>
-                <p className="text-[10px] leading-4 text-primary-foreground/80">
+                <p
+                  className={cn(
+                    'text-[10px] leading-4',
+                    entry.outcome === 'success'
+                      ? 'text-emerald-300'
+                      : 'text-rose-300'
+                  )}
+                >
                   {entry.outcome === 'success'
                     ? entry.prizeName
                       ? `Prize: ${entry.prizeName}`
