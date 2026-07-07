@@ -7,6 +7,7 @@ import {
   Keyboard,
   Loader2,
   ScanLine,
+  Settings,
   Zap,
   ZapOff,
 } from 'lucide-react'
@@ -23,8 +24,17 @@ import { extractCode, type RedemptionResult } from '@/lib/redemption'
 import { cn } from '@/lib/utils'
 
 type Phase = 'idle' | 'scanning' | 'validating' | 'result'
+type ThemeMode = 'light' | 'dark'
 
 const HISTORY_STORAGE_KEY = 'swag-redemption-history-v1'
+const SETTINGS_STORAGE_KEY = 'swag-scanner-settings-v1'
+
+function triggerHapticFeedback(enabled: boolean) {
+  if (typeof window === 'undefined' || !enabled) return
+  if ('vibrate' in navigator) {
+    navigator.vibrate?.(80)
+  }
+}
 
 const ERROR_COPY: Record<ScannerError, { title: string; detail: string }> = {
   'no-camera': {
@@ -56,6 +66,9 @@ export function ScannerScreen() {
   const [history, setHistory] = useState<RedemptionHistoryEntry[]>([])
   const [manualOpen, setManualOpen] = useState(false)
   const [manualCode, setManualCode] = useState('')
+  const [settingsOpen, setSettingsOpen] = useState(false)
+  const [hapticsEnabled, setHapticsEnabled] = useState(true)
+  const [theme, setTheme] = useState<ThemeMode>('light')
 
   // Guards against processing multiple frames of the same code.
   const processingRef = useRef(false)
@@ -81,6 +94,40 @@ export function ScannerScreen() {
     window.localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(history))
   }, [history])
 
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+
+    try {
+      const stored = window.localStorage.getItem(SETTINGS_STORAGE_KEY)
+      if (!stored) return
+      const parsed = JSON.parse(stored) as {
+        hapticsEnabled?: boolean
+        theme?: ThemeMode
+      }
+      if (typeof parsed.hapticsEnabled === 'boolean') {
+        setHapticsEnabled(parsed.hapticsEnabled)
+      }
+      if (parsed.theme === 'dark' || parsed.theme === 'light') {
+        setTheme(parsed.theme)
+      }
+    } catch {
+      // Ignore invalid settings and keep defaults.
+    }
+  }, [])
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+
+    const root = window.document.documentElement
+    root.classList.toggle('dark', theme === 'dark')
+    root.classList.toggle('light', theme === 'light')
+    root.style.colorScheme = theme
+    window.localStorage.setItem(
+      SETTINGS_STORAGE_KEY,
+      JSON.stringify({ hapticsEnabled, theme })
+    )
+  }, [hapticsEnabled, theme])
+
   const validate = useCallback(async (rawValue: string) => {
     const code = extractCode(rawValue)
     if (!code) {
@@ -90,6 +137,10 @@ export function ScannerScreen() {
 
     setPhase('validating')
     const res = await redeemCode(code)
+    if (res.outcome === 'success') {
+      triggerHapticFeedback(hapticsEnabled)
+    }
+
     setResult(res)
     setCounts((prev) => ({
       success: prev.success + (res.outcome === 'success' ? 1 : 0),
@@ -176,7 +227,17 @@ export function ScannerScreen() {
             <p className="text-xs opacity-80">Event Scanner</p>
           </div>
         </div>
-        <SessionStats counts={counts} history={history} />
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => setSettingsOpen(true)}
+            className="rounded-full border border-border/60 bg-background/80 p-2 text-foreground shadow-sm"
+            aria-label="Open settings"
+          >
+            <Settings className="h-4 w-4" aria-hidden="true" />
+          </button>
+          <SessionStats counts={counts} history={history} />
+        </div>
       </header>
 
       {/* Camera stage */}
@@ -303,6 +364,17 @@ export function ScannerScreen() {
               }}
             />
           </div>
+        ) : null}
+
+        {/* Settings sheet */}
+        {settingsOpen ? (
+          <SettingsSheet
+            hapticsEnabled={hapticsEnabled}
+            onToggleHaptics={() => setHapticsEnabled((prev) => !prev)}
+            theme={theme}
+            onThemeChange={setTheme}
+            onClose={() => setSettingsOpen(false)}
+          />
         ) : null}
 
         {/* Manual entry sheet */}
