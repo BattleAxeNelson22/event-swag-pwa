@@ -127,17 +127,22 @@ export async function POST(request: Request) {
         : { ...(body as object), outcome: desired, reason: desired }
 
     const result = interpretResponse(code, status, enriched)
-    const customErrorDetail =
-      (/^error\d+/.test(code.toLowerCase()) || code.toLowerCase().includes('error'))
+    const lowerCode = code.toLowerCase()
+
+    const customDetail =
+      /^error\d+/.test(lowerCode) || lowerCode.includes('error')
         ? 'An unknown error occurred reading the code, try scanning again.'
-        : undefined
+        : /^used\d+/.test(lowerCode) || lowerCode.includes('used') || lowerCode.includes('redeem') || lowerCode.includes('dup')
+          ? 'This code has already been redeemed.'
+          : /^invalid\d+/.test(lowerCode) || lowerCode.includes('invalid') || lowerCode.includes('fail') || lowerCode.includes('bad')
+            ? 'This code was not recognized as valid.'
+            : undefined
 
     return NextResponse.json(
-      customErrorDetail
+      customDetail
         ? {
             ...result,
-            title: 'Something Went Wrong',
-            detail: customErrorDetail,
+            detail: customDetail,
           }
         : result,
       { status: 200 }
