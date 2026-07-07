@@ -29,10 +29,11 @@ const SUBSCRIPTION_KEY = process.env.SUBSCRIPTION_KEY
  */
 function resolveMockOutcome(code: string): RedemptionOutcome {
   const c = code.toLowerCase()
+  if (/^error\d+/.test(c) || c.includes('error')) return 'error'
   if (c.includes('expire') || c.includes('exp-')) return 'expired'
-  if (c.includes('used') || c.includes('redeem') || c.includes('dup'))
+  if (/^used\d+/.test(c) || c.includes('used') || c.includes('redeem') || c.includes('dup'))
     return 'already_redeemed'
-  if (c.includes('invalid') || c.includes('fail') || c.includes('bad'))
+  if (/^invalid\d+/.test(c) || c.includes('invalid') || c.includes('fail') || c.includes('bad'))
     return 'invalid'
   return 'success'
 }
@@ -126,7 +127,21 @@ export async function POST(request: Request) {
         : { ...(body as object), outcome: desired, reason: desired }
 
     const result = interpretResponse(code, status, enriched)
-    return NextResponse.json(result, { status: 200 })
+    const customErrorDetail =
+      (/^error\d+/.test(code.toLowerCase()) || code.toLowerCase().includes('error'))
+        ? 'An unknown error occurred reading the code, try scanning again.'
+        : undefined
+
+    return NextResponse.json(
+      customErrorDetail
+        ? {
+            ...result,
+            title: 'Something Went Wrong',
+            detail: customErrorDetail,
+          }
+        : result,
+      { status: 200 }
+    )
   } catch (err) {
     console.log('[v0] Upstream redemption call failed:', err)
     return NextResponse.json(
