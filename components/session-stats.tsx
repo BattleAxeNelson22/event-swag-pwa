@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { ChevronDown } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
@@ -27,9 +27,30 @@ export function SessionStats({
   history: RedemptionHistoryEntry[]
 }) {
   const [open, setOpen] = useState(false)
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (!open) return
+
+    const handlePointerDown = (event: MouseEvent) => {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target as Node)
+      ) {
+        setOpen(false)
+      }
+    }
+
+    document.addEventListener('mousedown', handlePointerDown)
+    return () => document.removeEventListener('mousedown', handlePointerDown)
+  }, [open])
 
   return (
-    <div className="relative flex flex-col items-end gap-2" aria-label="Session totals">
+    <div
+      ref={containerRef}
+      className="relative flex flex-col items-end gap-2"
+      aria-label="Session totals"
+    >
       <div className="flex items-center gap-2">
         <button
           type="button"
@@ -39,7 +60,14 @@ export function SessionStats({
         >
           <Stat label="Redeemed" value={counts.success} tone="success" />
         </button>
-        <Stat label="Rejected" value={counts.failed} tone="failed" />
+        <button
+          type="button"
+          onClick={() => setOpen((prev) => !prev)}
+          className="rounded-lg bg-primary-foreground/10 px-2.5 py-1 transition hover:bg-primary-foreground/20"
+          aria-expanded={open}
+        >
+          <Stat label="Rejected" value={counts.failed} tone="failed" />
+        </button>
       </div>
 
       {history.length > 0 && open ? (
