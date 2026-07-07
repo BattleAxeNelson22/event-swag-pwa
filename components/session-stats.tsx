@@ -29,7 +29,7 @@ export function SessionStats({
   const [open, setOpen] = useState(false)
 
   return (
-    <div className="flex flex-col items-end gap-2" aria-label="Session totals">
+    <div className="relative flex flex-col items-end gap-2" aria-label="Session totals">
       <div className="flex items-center gap-2">
         <button
           type="button"
@@ -43,7 +43,7 @@ export function SessionStats({
       </div>
 
       {history.length > 0 && open ? (
-        <div className="w-[280px] max-w-[calc(100vw-2rem)] rounded-xl border border-white/10 bg-black/10 p-2.5 text-left shadow-sm">
+        <div className="absolute right-0 top-full z-50 mt-2 w-[280px] max-w-[calc(100vw-2rem)] rounded-xl border border-white/10 bg-slate-900/95 p-2.5 text-left shadow-2xl backdrop-blur">
           <div className="mb-1.5 flex items-center justify-between">
             <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-primary-foreground/70">
               Last 5 results
