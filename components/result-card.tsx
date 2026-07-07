@@ -118,6 +118,22 @@ export function ResultCard({ result, onScanNext, onRetry }: ResultCardProps) {
           </p>
         </div>
 
+        {isSuccess ? (
+          <div className="w-full max-w-[240px] rounded-2xl border border-[#166534]/20 bg-white/70 p-3 shadow-sm">
+            <div className="flex aspect-[4/3] items-center justify-center rounded-xl border border-dashed border-[#166534]/30 bg-[#f7fbf8] text-center">
+              <div className="space-y-2 px-4">
+                <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-[#14532d]/10 text-[#14532d]">
+                  <CheckCircle2 className="h-6 w-6" aria-hidden="true" />
+                </div>
+                <p className="text-sm font-semibold text-[#14532d]">Swag Image Placeholder</p>
+                <p className="text-xs leading-relaxed text-[#166534]/70">
+                  {result.prizeName ? `Prize: ${result.prizeName}` : 'Prize artwork will appear here'}
+                </p>
+              </div>
+            </div>
+          </div>
+        ) : null}
+
         {result.code ? (
           <div
             className={cn(
