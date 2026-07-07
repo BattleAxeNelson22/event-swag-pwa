@@ -6,8 +6,10 @@ import {
   Camera,
   Keyboard,
   Loader2,
+  Moon,
   ScanLine,
   Settings,
+  Sun,
   Zap,
   ZapOff,
 } from 'lucide-react'
@@ -166,7 +168,7 @@ export function ScannerScreen() {
 
     setHistory((prev) => [entry, ...prev].slice(0, 5))
     setPhase('result')
-  }, [])
+  }, [hapticsEnabled])
 
   const handleDetect = useCallback(
     (value: string) => {
@@ -227,17 +229,7 @@ export function ScannerScreen() {
             <p className="text-xs opacity-80">Event Scanner</p>
           </div>
         </div>
-        <div className="flex items-center gap-2">
-          <button
-            type="button"
-            onClick={() => setSettingsOpen(true)}
-            className="rounded-full border border-border/60 bg-background/80 p-2 text-foreground shadow-sm"
-            aria-label="Open settings"
-          >
-            <Settings className="h-4 w-4" aria-hidden="true" />
-          </button>
-          <SessionStats counts={counts} history={history} />
-        </div>
+        <SessionStats counts={counts} history={history} />
       </header>
 
       {/* Camera stage */}
@@ -366,6 +358,15 @@ export function ScannerScreen() {
           </div>
         ) : null}
 
+        <button
+          type="button"
+          onClick={() => setSettingsOpen(true)}
+          className="absolute bottom-4 left-4 z-20 rounded-full border border-border/60 bg-background/90 p-3 text-foreground shadow-lg"
+          aria-label="Open settings"
+        >
+          <Settings className="h-4 w-4" aria-hidden="true" />
+        </button>
+
         {/* Settings sheet */}
         {settingsOpen ? (
           <SettingsSheet
@@ -417,6 +418,99 @@ function ScanReticle() {
         <span className="scan-shell__reticle-corner scan-shell__reticle-corner--bl" />
         <span className="scan-shell__reticle-corner scan-shell__reticle-corner--br" />
         <div className="scan-shell__reticle-line animate-scan-line" />
+      </div>
+    </div>
+  )
+}
+
+function SettingsSheet({
+  hapticsEnabled,
+  onToggleHaptics,
+  theme,
+  onThemeChange,
+  onClose,
+}: {
+  hapticsEnabled: boolean
+  onToggleHaptics: () => void
+  theme: ThemeMode
+  onThemeChange: (theme: ThemeMode) => void
+  onClose: () => void
+}) {
+  return (
+    <div className="scan-shell__sheet">
+      <div className="w-full space-y-4 rounded-t-3xl bg-background p-6 animate-in slide-in-from-bottom duration-200">
+        <div className="mx-auto h-1.5 w-12 rounded-full bg-muted" />
+        <div className="flex items-start justify-between gap-3">
+          <div>
+            <h2 className="text-lg font-bold">Settings</h2>
+            <p className="text-sm text-muted-foreground">
+              Customize the scanner experience for your event staff.
+            </p>
+          </div>
+          <Button type="button" variant="outline" size="sm" onClick={onClose}>
+            Close
+          </Button>
+        </div>
+
+        <div className="space-y-3 rounded-2xl border border-border/70 bg-card p-4">
+          <div className="flex items-center justify-between gap-3">
+            <div>
+              <p className="font-medium">Haptic feedback</p>
+              <p className="text-sm text-muted-foreground">
+                Vibrate on successful scans.
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={onToggleHaptics}
+              className={cn(
+                'relative h-7 w-14 rounded-full transition-colors',
+                hapticsEnabled ? 'bg-primary' : 'bg-muted'
+              )}
+              aria-pressed={hapticsEnabled}
+            >
+              <span
+                className={cn(
+                  'absolute top-1 left-1 h-5 w-5 rounded-full bg-background transition-transform',
+                  hapticsEnabled ? 'translate-x-7' : 'translate-x-0'
+                )}
+              />
+            </button>
+          </div>
+
+          <div className="flex items-center justify-between gap-3">
+            <div>
+              <p className="font-medium">Appearance</p>
+              <p className="text-sm text-muted-foreground">
+                Switch between light and dark mode.
+              </p>
+            </div>
+            <div className="flex items-center gap-2 rounded-full border border-border/70 bg-background p-1">
+              <button
+                type="button"
+                onClick={() => onThemeChange('light')}
+                className={cn(
+                  'rounded-full p-2',
+                  theme === 'light' ? 'bg-primary text-primary-foreground' : 'text-muted-foreground'
+                )}
+                aria-pressed={theme === 'light'}
+              >
+                <Sun className="h-4 w-4" aria-hidden="true" />
+              </button>
+              <button
+                type="button"
+                onClick={() => onThemeChange('dark')}
+                className={cn(
+                  'rounded-full p-2',
+                  theme === 'dark' ? 'bg-primary text-primary-foreground' : 'text-muted-foreground'
+                )}
+                aria-pressed={theme === 'dark'}
+              >
+                <Moon className="h-4 w-4" aria-hidden="true" />
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   )
