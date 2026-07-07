@@ -70,12 +70,7 @@ export function ScannerScreen() {
       const parsed = JSON.parse(stored) as RedemptionHistoryEntry[]
       if (!Array.isArray(parsed)) return
 
-      const recent = parsed.slice(0, 5)
-      setHistory(recent)
-      setCounts({
-        success: recent.filter((entry) => entry.outcome === 'success').length,
-        failed: recent.filter((entry) => entry.outcome !== 'success').length,
-      })
+      setHistory(parsed.slice(0, 5))
     } catch {
       // Ignore invalid persisted history and continue with an empty list.
     }
