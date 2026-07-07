@@ -18,9 +18,7 @@ const FAIL_URL =
   'https://test-api.culvers.com/punchh/Mock/checkoffsiteredeemable-fail'
 
 // The subscription key is the real trust anchor and stays server-side.
-// Defaults to the challenge-provided key so the app runs out of the box.
-const SUBSCRIPTION_KEY =
-  process.env.SUBSCRIPTION_KEY ?? '22f000af3faa43f783da93d214d82e96'
+const SUBSCRIPTION_KEY = process.env.SUBSCRIPTION_KEY
 
 /**
  * The provided endpoints are fixed success/fail mocks that ignore the code.
@@ -77,6 +75,18 @@ export async function POST(request: Request) {
     return NextResponse.json(
       { outcome: 'invalid', code: '', title: 'Invalid Code', detail: 'No redemption code was provided.' } satisfies RedemptionResult,
       { status: 400 }
+    )
+  }
+
+  if (!SUBSCRIPTION_KEY) {
+    return NextResponse.json(
+      {
+        outcome: 'error',
+        code,
+        title: 'Configuration Error',
+        detail: 'The redemption service is not configured.',
+      } satisfies RedemptionResult,
+      { status: 500 }
     )
   }
 
